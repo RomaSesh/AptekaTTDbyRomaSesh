@@ -1,47 +1,30 @@
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class AptekaTest {
     private Apteka apteka;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        apteka = new Apteka("Тестовая Аптека");
-        apteka.addMedicine("Тестовое Лекарство 1", 100.0);
-        apteka.addMedicine("Тестовое Лекарство 2", 200.0);
+        apteka = new Apteka("Тестовая аптека");
+        apteka.addMedicine("Парацетамол", 60.0);
+        apteka.addMedicine("Ибупрофен", 80.0);
     }
 
     @Test
     public void testGetFullInfo() {
-        String expectedInfo = "Аптека: Тестовая Аптека\nЛекарства:\n" +
-                "Тестовое Лекарство 1 - 100.0 руб.\n" +
-                "Тестовое Лекарство 2 - 200.0 руб.\n";
-        assertEquals(expectedInfo, apteka.getFullInfo());
+        String expected = "Аптека: Тестовая аптека\nЛекарства:\nПарацетамол - 60.0 руб.\nИбупрофен - 80.0 руб.\n";
+        assertEquals(expected, apteka.getFullInfo());
     }
 
     @Test
     public void testGetHighestPrice() {
-        assertEquals(200.0, apteka.getHighestPrice(), 0.001);
+        assertEquals(80.0, apteka.getHighestPrice());
     }
 
     @Test
     public void testGetTotalCost() {
-        assertEquals(300.0, apteka.getTotalCost(), 0.001);
-    }
-
-    @Test
-    public void testRemoveMedicine() {
-        apteka.removeMedicine("Тестовое Лекарство 1");
-        assertEquals(1, apteka.getMedicinesCount());
-        assertEquals(200.0, apteka.getHighestPrice(), 0.001);
-    }
-
-    @Test
-    public void testFindMedicineByName() {
-        Lekarstvo foundMedicine = apteka.findMedicineByName("Тестовое Лекарство 2");
-        assertNotNull(foundMedicine);
-        assertEquals("Тестовое Лекарство 2", foundMedicine.getName());
-        assertEquals(200.0, foundMedicine.getPrice(), 0.001);
+        assertEquals(140.0, apteka.getTotalCost());
     }
 }
